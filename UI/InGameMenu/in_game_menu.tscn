@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8vxl7gyduhr4"]
+
+[ext_resource type="Theme" uid="uid://x8ajho8j8sb4" path="res://UI/ButtonTheme/menu_theme.tres" id="1_e0x2p"]
+[ext_resource type="Script" path="res://UI/InGameMenu/in_game_menu.gd" id="1_p6x2w"]
+[ext_resource type="Shader" path="res://Common/Shaders/blur.gdshader" id="2_qaeeq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1x3t"]
+shader = ExtResource("2_qaeeq")
+shader_parameter/amount = 1.29
+
+[node name="InGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_e0x2p")
+script = ExtResource("1_p6x2w")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="UiNode" type="Node2D" parent="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/UiNode"]
+material = SubResource("ShaderMaterial_h1x3t")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Resume" type="Button" parent="CanvasLayer/UiNode"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 521.0
+offset_top = 49.0
+offset_right = 593.0
+offset_bottom = 86.0
+grow_horizontal = 2
+theme = ExtResource("1_e0x2p")
+text = "Resume"
+
+[node name="Quit" type="Button" parent="CanvasLayer/UiNode"]
+offset_left = 451.0
+offset_top = 134.0
+offset_right = 675.0
+offset_bottom = 182.0
+theme = ExtResource("1_e0x2p")
+text = "Quit"
+
+[node name="Fullscreen" type="Button" parent="CanvasLayer/UiNode"]
+offset_left = 996.0
+offset_top = 597.0
+offset_right = 1133.0
+offset_bottom = 634.0
+theme = ExtResource("1_e0x2p")
+text = "Fullscreen
+"
+
+[connection signal="pressed" from="CanvasLayer/UiNode/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/UiNode/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UiNode/Fullscreen" to="." method="_on_fullscreen_pressed"]

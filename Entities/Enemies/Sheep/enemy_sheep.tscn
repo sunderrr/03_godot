@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://behi6ho6i63y1"]
+
+[ext_resource type="Texture2D" uid="uid://bsg5d6ut6ebhf" path="res://Entities/Enemies/Sheep/sheep_animation_idle_spritesheet.png" id="1_wvhbq"]
+[ext_resource type="Script" path="res://Common/Nodes/HurtBox/HurtBox.gd" id="2_twd42"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cxhv"]
+radius = 20.0
+height = 74.0
+
+[node name="EnemySheep" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-13, -30)
+texture = ExtResource("1_wvhbq")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_3cxhv")
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("2_twd42")

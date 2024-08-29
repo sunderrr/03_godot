@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://se13rv1kpisg"]
+
+[ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_g65jq"]
+[ext_resource type="PackedScene" uid="uid://ctjox72tt4lep" path="res://Entities/Weapon/Sword/weapon_sword.tscn" id="2_hw1eu"]
+[ext_resource type="Material" uid="uid://1ohwn5abrojp" path="res://Common/Material/Whiten.tres" id="2_ksivr"]
+[ext_resource type="PackedScene" uid="uid://bw4dy8dlwnm58" path="res://Common/Dash/dash.tscn" id="3_26wta"]
+[ext_resource type="Texture2D" uid="uid://dkt4845nivqri" path="res://Entities/Player/Idle.png" id="4_8na0a"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwb2j"]
+radius = 12.0
+height = 32.0
+
+[sub_resource type="Gradient" id="Gradient_pshq6"]
+colors = PackedColorArray(0.847059, 0.870588, 0.262745, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fbj5m"]
+gradient = SubResource("Gradient_pshq6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xp0k1"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 23.54
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 7.0
+color_ramp = SubResource("GradientTexture1D_fbj5m")
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_g65jq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mwb2j")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = ExtResource("2_ksivr")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_8na0a")
+offset = Vector2(0, -208)
+hframes = 2
+
+[node name="WeaponSword" parent="." instance=ExtResource("2_hw1eu")]
+y_sort_enabled = true
+position = Vector2(1, -19)
+scale = Vector2(1, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+z_index = 2
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_xp0k1")
+lifetime = 1.2
+fixed_fps = 60
+
+[node name="Dash" parent="." instance=ExtResource("3_26wta")]
