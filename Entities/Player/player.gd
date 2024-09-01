@@ -20,6 +20,7 @@ var dashCooldown = 2.0
 
 
 func _ready():
+	player_sprite.material.set_shader_parameter("whiten", false)
 	pass
 	
 func _physics_process(delta):

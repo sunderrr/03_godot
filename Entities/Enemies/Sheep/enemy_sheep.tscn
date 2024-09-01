@@ -1,15 +1,88 @@
-[gd_scene load_steps=4 format=3 uid="uid://behi6ho6i63y1"]
+[gd_scene load_steps=13 format=3 uid="uid://behi6ho6i63y1"]
 
+[ext_resource type="Material" uid="uid://1ohwn5abrojp" path="res://Common/Material/Whiten.tres" id="1_g2oif"]
+[ext_resource type="Script" path="res://Entities/Enemies/Sheep/enemy_sheep.gd" id="1_o7otf"]
 [ext_resource type="Texture2D" uid="uid://bsg5d6ut6ebhf" path="res://Entities/Enemies/Sheep/sheep_animation_idle_spritesheet.png" id="1_wvhbq"]
 [ext_resource type="Script" path="res://Common/Nodes/HurtBox/HurtBox.gd" id="2_twd42"]
+[ext_resource type="Texture2D" uid="uid://ygscs4aje716" path="res://Entities/Enemies/Sheep/32x32_Impact_3.png" id="5_3brj2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3cxhv"]
 radius = 20.0
 height = 74.0
 
-[node name="EnemySheep" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_v3ugn"]
+length = 0.001
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[sub_resource type="Animation" id="Animation_nn86r"]
+resource_name = "hurt"
+length = 0.2667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0333, 0.1, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, -0.349066, 0.349066, 0.174533, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:material:shader_parameter/whiten")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667, 0.233333, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtParticle:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r00eg"]
+_data = {
+"RESET": SubResource("Animation_v3ugn"),
+"hurt": SubResource("Animation_nn86r")
+}
+
+[sub_resource type="Gradient" id="Gradient_0hx60"]
+offsets = PackedFloat32Array(0, 0.475877, 1)
+colors = PackedColorArray(0.983333, 1, 0, 1, 1, 0.45, 0, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p0enu"]
+gradient = SubResource("Gradient_0hx60")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iyrpb"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 25.14
+initial_velocity_min = 266.67
+initial_velocity_max = 600.0
+gravity = Vector3(0, 0, 0)
+damping_min = 150.0
+damping_max = 200.0
+scale_min = 0.3
+color_ramp = SubResource("GradientTexture1D_p0enu")
+
+[node name="EnemySheep" type="CharacterBody2D"]
+script = ExtResource("1_o7otf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+material = ExtResource("1_g2oif")
 position = Vector2(-13, -30)
 texture = ExtResource("1_wvhbq")
 hframes = 4
@@ -20,3 +93,27 @@ shape = SubResource("CapsuleShape2D_3cxhv")
 
 [node name="HurtBox" type="Area2D" parent="."]
 script = ExtResource("2_twd42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_3cxhv")
+debug_color = Color(0, 0.645826, 0.251434, 0.42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r00eg")
+}
+
+[node name="HurtParticle" type="GPUParticles2D" parent="."]
+position = Vector2(1, -17)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_iyrpb")
+texture = ExtResource("5_3brj2")
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.77
+randomness = 0.54
+
+[node name="DamageSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(0, -25)

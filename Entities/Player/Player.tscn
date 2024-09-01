@@ -44,7 +44,6 @@ hframes = 2
 [node name="WeaponSword" parent="." instance=ExtResource("2_hw1eu")]
 y_sort_enabled = true
 position = Vector2(1, -19)
-scale = Vector2(1, 1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 visible = false

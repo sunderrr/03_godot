@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7retke13gckf"]
+[gd_scene load_steps=7 format=3 uid="uid://c7retke13gckf"]
 
 [ext_resource type="Script" path="res://Stages/Main/main.gd" id="1_8447j"]
 [ext_resource type="PackedScene" uid="uid://dulwc64sjmcrg" path="res://Stages/Tilesets/Set1/proc_gen_world.tscn" id="2_yefhe"]
 [ext_resource type="PackedScene" uid="uid://se13rv1kpisg" path="res://Entities/Player/Player.tscn" id="4_rxusj"]
 [ext_resource type="PackedScene" uid="uid://unmt2masi6gf" path="res://Entities/Camera/Camera.tscn" id="5_4wt20"]
 [ext_resource type="PackedScene" uid="uid://drvhyhdinxryy" path="res://UI/PauseMenu/pause_menu.tscn" id="5_5kpvu"]
+[ext_resource type="PackedScene" uid="uid://behi6ho6i63y1" path="res://Entities/Enemies/Sheep/enemy_sheep.tscn" id="6_76hrw"]
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -17,3 +18,9 @@ script = ExtResource("1_8447j")
 [node name="Camera" parent="Player" instance=ExtResource("5_4wt20")]
 
 [node name="main_menu" parent="." instance=ExtResource("5_5kpvu")]
+
+[node name="EnemySheep" parent="." instance=ExtResource("6_76hrw")]
+position = Vector2(438, -26)
+
+[node name="EnemySheep2" parent="." instance=ExtResource("6_76hrw")]
+position = Vector2(-336, -26)

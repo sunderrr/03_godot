@@ -23,7 +23,7 @@ var terrain_sand_int = 0
 var terrain_grass_int = 1
 
 var width = 150
-var height = 150
+var height =150
 
 var tmp_noise_val_arr = []
 var tmp_noise_tree_val_arr = []
